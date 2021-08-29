@@ -2,7 +2,7 @@ package ar.com.ada.api.creditos.entities;
 
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -31,6 +31,9 @@ public class Prestamo {
     @ManyToOne // este tiene una relacion many to one (muchos prestamos a un cliente) 
     @JoinColumn(name = "cliente_id", referencedColumnName = "cliente_id") // es un join columns va donde va la FK
     Cliente cliente;
+
+
+    //List<Cancelacion> cancelaciones = new ArrayList<>();
 
     public int getPrestamoId() {
         return prestamoId;
