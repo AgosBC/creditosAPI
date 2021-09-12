@@ -33,7 +33,8 @@ public class Prestamo {
     Cliente cliente;
 
 
-    //List<Cancelacion> cancelaciones = new ArrayList<>();
+    @OneToMany(mappedBy = "prestamo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Cancelacion> cancelaciones = new ArrayList<>();
 
     public int getPrestamoId() {
         return prestamoId;
@@ -92,6 +93,10 @@ public class Prestamo {
     public void setEstadoId(EstadoPrestamoEnum estadoId) {
         this.estadoId = estadoId.getValue();
     }
+
+    public void agregarCancelacion(Cancelacion cancelacion) {
+        this.cancelaciones.add(cancelacion);
+    }   
 
     public enum EstadoPrestamoEnum{
 

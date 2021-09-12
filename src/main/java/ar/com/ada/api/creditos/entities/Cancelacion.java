@@ -21,6 +21,13 @@ public class Cancelacion {
 
     private int cuota;
 
+    public Cancelacion(BigDecimal importe, int cuota, Date fechaCancelacion) {
+        this.importe = importe;
+        this.cuota = cuota;
+        this.fecahaCancelacion = fechaCancelacion;
+        
+    }
+
     @ManyToOne
     @JoinColumn(name = "prestamo_id", referencedColumnName = "prestamo_id")
     Prestamo prestamo;

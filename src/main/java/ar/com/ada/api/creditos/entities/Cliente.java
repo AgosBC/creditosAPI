@@ -8,6 +8,8 @@ import java.util.*;
 
 import org.hibernate.annotations.*;
 
+import ar.com.ada.api.creditos.excepciones.ClienteDNIException;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -55,8 +57,20 @@ public class Cliente {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(int dni) throws ClienteDNIException {
+
+        if (dni < 0) {
+            // no se ejecuta nada mas despues del throw
+            throw new ClienteDNIException(this, "ocurrio un error con el DNI");
+
+        }
         this.dni = dni;
+        
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente [id=" + clienteId + ", dni=" + dni + ", nombre=" + nombre + "]";
     }
 
     public String getDireccion() {

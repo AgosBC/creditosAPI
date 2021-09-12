@@ -9,6 +9,8 @@ public class CancelacionRequest {
 
     public BigDecimal importe;
 
+    public int numeroCuota;
+
     public Date fechaCancelacion;
     
 }
