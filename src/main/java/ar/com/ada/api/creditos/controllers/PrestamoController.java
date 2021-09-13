@@ -1,12 +1,18 @@
 package ar.com.ada.api.creditos.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.ada.api.creditos.entities.Prestamo;
+import ar.com.ada.api.creditos.models.Request.EstadoPrestamoRequest;
 import ar.com.ada.api.creditos.models.Request.PrestamoRequest;
 import ar.com.ada.api.creditos.models.response.GenericResponse;
 import ar.com.ada.api.creditos.services.PrestamoService;
@@ -17,7 +23,7 @@ public class PrestamoController {
     @Autowired
     PrestamoService service;
 
-    @PostMapping
+    @PostMapping ("/prestamos")
     public ResponseEntity<GenericResponse> emitirPrestamo(@RequestBody PrestamoRequest request){
         GenericResponse r = new GenericResponse();
 
@@ -30,6 +36,37 @@ public class PrestamoController {
         return ResponseEntity.ok(r);
 
 
+    }
+
+    @GetMapping("/prestamos")
+    public ResponseEntity<List<Prestamo>> traerPrestamos() {
+        List<Prestamo> lista = service.traerPrestamos();
+
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/prestamos/{id}")
+    public ResponseEntity<Prestamo> getPrestamoPorId(@PathVariable Integer id){
+        Prestamo prestamo = service.buscarPrestamoPorId(id);
+
+        return ResponseEntity.ok(prestamo);
+    }
+
+    @PutMapping("/prestamos/{id}")
+    public ResponseEntity<GenericResponse> modificarEstadoPrestamo(@PathVariable Integer id,
+            @RequestBody EstadoPrestamoRequest estadoPrestamo) {
+
+        GenericResponse respuesta = new GenericResponse();
+
+        Prestamo prestamo = service.buscarPrestamoPorId(id);
+        prestamo.setEstadoId(estadoPrestamo.estadoNuevo);
+        service.actualizar(prestamo);
+
+        respuesta.id = prestamo.getPrestamoId();
+        respuesta.isOk = true;
+        respuesta.mensaje = "Estado de Préstamo actualizado";
+
+        return ResponseEntity.ok(respuesta);
     }
     
 }

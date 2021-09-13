@@ -2,6 +2,7 @@ package ar.com.ada.api.creditos.services;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,13 +31,24 @@ public class PrestamoService {
         prestamo.setFechaPrestamo(fechaPrestamo);
         prestamo.setFechaAlta(new Date());
         prestamo.setEstadoId(EstadoPrestamoEnum.SOLICITADO);
-        
+
         cliente.agregarPrestamo(prestamo);
 
         return repo.save(prestamo);
 
-        
-        
     }
-    
+
+    public Prestamo buscarPrestamoPorId(Integer prestamoId) {
+        return repo.findByPrestamoId(prestamoId);
+    }
+
+    public List<Prestamo> traerPrestamos() {
+        return repo.findAll();
+    }
+
+    public void actualizar(Prestamo prestamo) {
+
+        repo.save(prestamo);
+    }
+
 }
