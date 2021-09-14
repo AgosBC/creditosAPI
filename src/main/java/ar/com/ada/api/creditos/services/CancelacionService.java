@@ -1,30 +1,24 @@
 package ar.com.ada.api.creditos.services;
-
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.ada.api.creditos.entities.Cancelacion;
-import ar.com.ada.api.creditos.entities.Cliente;
-import ar.com.ada.api.creditos.entities.Prestamo;
+import ar.com.ada.api.creditos.repos.CancelacionRepository;
+
 @Service
 public class CancelacionService {
 
     @Autowired
-    ClienteService clienteService;
+    CancelacionRepository repo;
 
-    public Cancelacion cancelarCuota(Integer prestamoId, BigDecimal importe, Date fechaCancelacion) {
-        
-        
-        
-        
-        //List<Prestamo> prestamos = cliente.getPrestamos();
+    public void crear(Cancelacion cancelacion) {
+        repo.save(cancelacion);
+    }
 
-        return Cancelacion;
-
-       
+    public List<Cancelacion> traerTodasLasCancelaciones() {
+        return repo.findAll();
     }
     
 }
